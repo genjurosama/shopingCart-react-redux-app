@@ -1,17 +1,26 @@
 //@flow
-import Immutable from 'immutable'
-import type { fromJS as Immut } from 'immutable'
+import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT } from "../actions/cart";
 
-const initialState = Immutable.fromJS({
-    message: 'Initial reducer message',
-  })
+const initialState = {
+  products: []
+};
 
-const cart = (state: Immut = initialState, action: { type: string, payload: any }) => {
-    switch (action.type) {
-      case 'FETCH_REQUEST':
-        return Object.assign({},state,action.payload)
-      default:
-        return state
-    }
+const cart = (state = initialState, action: { type: string, payload: any }) => {
+  switch (action.type) {
+    case CART_ADD_PRODUCT:
+      return {
+        ...state,
+        products: state.products.concat(action.newProduct)
+      };
+    case CART_REMOVE_PRODUCT:
+      const products = state.products.filter(
+        product => product.id !== action.productId
+      );
+      return {
+        ...state,
+        products: products
+      };
+    default:
+      return state;
   }
-  
+};

@@ -15,6 +15,7 @@
     "react-scripts": "1.0.17",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
+    "redux-saga": "^0.16.0",
     "webpack-dev-server": "^2.9.5"
   },
   "scripts": {
