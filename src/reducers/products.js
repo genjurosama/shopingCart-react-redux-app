@@ -6,18 +6,20 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  products: []
+    products:[]
 };
 
-const products = (
-  state = initialState,
-  action: { type: string, payload: any }
-) => {
+export const products = (state = initialState,action) => {
   switch (action.type) {
     case PRODUCT_FETCH_REQUESTED:
+      console.log('reducer request')
       return Object.assign({}, state, action.payload);
     case PRODUCT_FETCH_SUCCEEDED:
-      return Object.assign({}, state, action.payload);
+      console.log('reducer',action);  
+      return {
+        ...state,
+        products: state.products.concat(action.products)
+      };
     case PRODUCT_FETCH_FAILED:
       return Object.assign({}, state, action.payload);
     default:

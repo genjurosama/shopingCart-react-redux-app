@@ -3,4 +3,4 @@ import {cart} from './cart'
 import {products} from './products'
 
 
-export default combineReducers(cart,products);
+export default combineReducers({cart,products});

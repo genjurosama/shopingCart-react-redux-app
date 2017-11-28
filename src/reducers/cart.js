@@ -5,7 +5,7 @@ const initialState = {
   products: []
 };
 
-const cart = (state = initialState, action: { type: string, payload: any }) => {
+export const cart = (state = initialState, action) => {
   switch (action.type) {
     case CART_ADD_PRODUCT:
       return {

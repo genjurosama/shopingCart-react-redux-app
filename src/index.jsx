@@ -10,20 +10,26 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import promise from 'redux-promise'
 import App from './app.jsx'
 import reducer from './reducers'
+import mySaga from './actions/productsSaga'
 
 
+
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware()
 
 const logger = createLogger()
 const store = createStore(
   reducer,
-  applyMiddleware(thunk, promise, logger),
+  applyMiddleware(thunk, promise, logger,sagaMiddleware),
 )
-const rootEl = document.querySelector(APP_CONTAINER_SELECTOR)
+
+sagaMiddleware.run(mySaga)
 
 const wrapApp = (AppComponent, reduxStore) => (
   <Provider store={reduxStore}>
