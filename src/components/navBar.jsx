@@ -4,6 +4,7 @@ import { Grid, Navbar, Jumbotron, Button, NavDropdown, MenuItem, NavItem, Nav} f
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 import 'font-awesome/css/font-awesome.min.css';
+import Cart from '../containers/cart.jsx'
 
 const NavBar = () => {
   return (
@@ -17,7 +18,7 @@ const NavBar = () => {
      </Navbar.Header>
      <Navbar.Collapse>
        <Nav pullRight>
-         <NavItem eventKey={1} href="#"><i className='fa fa-cart-plus fa-3x'></i></NavItem>
+         <NavItem eventKey={1} href="#"><Cart/></NavItem>
        </Nav>
      </Navbar.Collapse>
    </Navbar>

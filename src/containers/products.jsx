@@ -2,38 +2,39 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchProducts } from "../actions/products";
-import {Product} from "../components/product.jsx";
-
+import { CART_ADD_PRODUCT, addProductToCart } from "../actions/cart";
+import { ProductsList } from "../components/productsList.jsx";
 
 class Products extends Component {
-
-  constructor(props){
-      super(props);
-  }  
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     this.props.fetchProducts();
   }
-  componentWillReceiveProps(nextProps){
-    console.log('received Props',nextProps);
+
+  handleClick(e, data) {
+    console.log(this)
+    this.props.addProductToCart(data);
   }
-  
   render() {
     return (
-       this.props.products.map(prod => {
-        return <Product key={prod.id} title={prod.title} price={prod.price} />;
-        }))
+      <div>
+         <ProductsList products={this.props.products} addProductToCart={this.props.addProductToCart} />
+      </div>
+    );
   }
 }
 
 // Get apps state and pass it as props to UserList
 //      > whenever state changes, the UserList will automatically re-render
 function mapStateToProps(state) {
-  return { products: state.products.products };
+  return { products: state.products.products  || []};
 }
 
 //      > now UserList has this.props.selectUser
 function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchProducts }, dispatch);
+  return bindActionCreators({ fetchProducts, addProductToCart }, dispatch);
 }
 
 // We don't want to return the plain UserList anymore, we want to return the smart Container

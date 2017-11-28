@@ -6,7 +6,12 @@ import {
 } from "../actions/products";
 
 const initialState = {
-    products:[]
+  products: [],
+  cart:{
+    cart:{
+      products:[]
+    }
+  }
 };
 
 export const products = (state = initialState,action) => {
