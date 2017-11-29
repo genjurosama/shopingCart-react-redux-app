@@ -6,6 +6,7 @@ import { Product } from "../components/product.jsx";
 import { Table, Button,Modal } from "react-bootstrap";
 import { ProductsList } from "../components/productsList.jsx";
 import {hideModal} from '../actions/ui'
+import {clearCart} from '../actions/cart'
 
 class CartPage extends Component{
     componentDidMount(){
@@ -19,13 +20,22 @@ class CartPage extends Component{
                 <Modal.Title>Modal title</Modal.Title>
               </Modal.Header>
         
-              <Modal.Body>
-              <ProductsList products={this.props.products} cartView={true}  addProductToCart={this.props.addProductToCart} subtractProductFromCart={this.props.subtractAmountProductFromCart} removeProductFromCart={this.props.removeProductFromCart}/>
+              
+              {(this.props.products.length>0)?(
+                <Modal.Body>
+                  <ProductsList products={this.props.products} cartView={true}  addProductToCart={this.props.addProductToCart} subtractProductFromCart={this.props.subtractAmountProductFromCart} removeProductFromCart={this.props.removeProductFromCart}/>
+                </Modal.Body>  
+              ):(
+                <Modal.Body>
+                  Cart is empty.
+                </Modal.Body>  
+              )}  
             
-              </Modal.Body>
+              
         
               <Modal.Footer>
                 <Button onClick={()=>this.props.hideModal()}>Close</Button>
+                <Button onClick={()=>this.props.clearCart()}>Clear</Button>
               </Modal.Footer>
         
             </Modal>
@@ -46,7 +56,7 @@ function mapStateToProps(state) {
   
   //      > now UserList has this.props.selectUser
   function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addProductToCart,removeProductFromCart,subtractAmountProductFromCart,hideModal }, dispatch);
+    return bindActionCreators({addProductToCart,removeProductFromCart,subtractAmountProductFromCart,hideModal,clearCart }, dispatch);
   }
   
   // We don't want to return the plain UserList anymore, we want to return the smart Container

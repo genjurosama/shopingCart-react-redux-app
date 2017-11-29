@@ -4,7 +4,8 @@ import * as _ from "lodash";
 import {
   CART_ADD_PRODUCT,
   CART_REMOVE_PRODUCT,
-  CART_SUB_PRODUCT
+  CART_SUB_PRODUCT,
+  CART_CLEAR
 } from "../actions/cart";
 
 const initialState = {
@@ -53,8 +54,15 @@ export const cartReducer = (state = initialState, action) => {
         }
         return product;
       });
+      console.log('products after map:',products);
 
       cart.products = products;
+      return {
+        ...state,
+        cart: cart
+      };
+    case CART_CLEAR:
+      cart.products = [];
       return {
         ...state,
         cart: cart
