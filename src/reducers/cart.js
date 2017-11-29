@@ -20,7 +20,11 @@ export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case CART_ADD_PRODUCT:
       cart.products = cart.products || [];
-      cart.products.push({ ...action.product, qt: 1 });
+      cart.products.push({
+        ...action.product,
+        qt: 1,
+        price: action.product.unitPrice
+      });
       const result = _.chain(cart.products)
         .groupBy("id")
         .map(function(category) {
@@ -48,13 +52,12 @@ export const cartReducer = (state = initialState, action) => {
       };
     case CART_SUB_PRODUCT:
       products = state.cart.products.map(product => {
-        if (product.id === action.productId) {
+        if (product.id === action.productId && product.qt > 1) {
           product.qt -= 1;
           product.price -= product.unitPrice;
         }
         return product;
       });
-      console.log('products after map:',products);
 
       cart.products = products;
       return {
