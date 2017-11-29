@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { CART_ADD_PRODUCT, addProductToCart,removeProductFromCart } from "../actions/cart";
 import { Product } from "../components/product.jsx";
 import { Table, Button } from "react-bootstrap";
+import {showModal} from '../actions/ui'
 
 class Cart extends Component{
     componentDidMount(){
@@ -11,9 +12,9 @@ class Cart extends Component{
     }
     render(){
         return (
-            <div>
-                <a href="/cart"><span className="badge">{this.props.products.length}</span><i className='fa fa-cart-plus fa-3x'></i></a>
-            </div>
+            <li>
+                <a onClick={this.props.showModal}><span className="badge">{this.props.products.length}</span><i className='fa fa-cart-plus fa-3x'></i></a>
+            </li>
         );
     }
 }
@@ -22,13 +23,12 @@ class Cart extends Component{
 // Get apps state and pass it as props to UserList
 //      > whenever state changes, the UserList will automatically re-render
 function mapStateToProps(state) {
-    console.log('received :',state);
-    return { products: state.cart.cart.products || [] };
+    return { products: state.cartReducer.cart.products || [] };
   }
   
   //      > now UserList has this.props.selectUser
   function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addProductToCart,removeProductFromCart }, dispatch);
+    return bindActionCreators({showModal }, dispatch);
   }
   
   // We don't want to return the plain UserList anymore, we want to return the smart Container

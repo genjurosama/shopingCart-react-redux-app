@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
-import {cart} from './cart'
-import {products} from './products'
+import {cartReducer} from './cart'
+import {productsReducer} from './products'
+import {uiReducer} from './ui'
 
 
-export default combineReducers({cart,products});
+export default combineReducers({cartReducer,productsReducer,uiReducer});

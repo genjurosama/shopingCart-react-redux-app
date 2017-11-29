@@ -1,44 +1,74 @@
 //@flow
-import * as _ from 'lodash'
-console.log(_.groupBy)
-import { CART_ADD_PRODUCT, CART_REMOVE_PRODUCT } from "../actions/cart";
+import * as _ from "lodash";
+
+import {
+  CART_ADD_PRODUCT,
+  CART_REMOVE_PRODUCT,
+  CART_SUB_PRODUCT
+} from "../actions/cart";
 
 const initialState = {
-  products: [],
-  cart:{
-    cart:{
-      products:[]
-    }
+  cart: {
+    products: []
   }
 };
 
-export const cart = (state = initialState, action) => {
+export const cartReducer = (state = initialState, action) => {
+  let cart = state.cart || {};
+  let products = [];
   switch (action.type) {
     case CART_ADD_PRODUCT:
-      let cart = state.cart || {};
-      cart.products =  cart.products || [];
-      cart.products.push({...action.product,qt:1})
-      const result = _.chain(cart.products).groupBy('title').map(function(category) {return category.reduce(sumTotals, {title:category[0].title, qt:0, price:0})}).valueOf();
+      cart.products = cart.products || [];
+      cart.products.push({ ...action.product, qt: 1 });
+      const result = _.chain(cart.products)
+        .groupBy("id")
+        .map(function(category) {
+          return category.reduce(sumTotals, {
+            title: category[0].title,
+            qt: 0,
+            price: 0,
+            unitPrice: 0
+          });
+        })
+        .valueOf();
       cart.products = result;
       return {
         ...state,
         cart: cart
       };
     case CART_REMOVE_PRODUCT:
-      const products = state.products.filter(
+      products = state.cart.products.filter(
         product => product.id !== action.productId
       );
+      cart.products = products;
       return {
         ...state,
-        products: products
+        cart: cart
+      };
+    case CART_SUB_PRODUCT:
+      products = state.cart.products.map(product => {
+        if (product.id === action.productId) {
+          product.qt -= 1;
+          product.price -= product.unitPrice;
+        }
+        return product;
+      });
+
+      cart.products = products;
+      return {
+        ...state,
+        cart: cart
       };
     default:
       return state;
   }
 };
 
-
 function sumTotals(p, c) {
-  return _.extend(p, {qt:p.qt + c.qt, price:p.price + c.qt*c.price});
-};
-
+  return _.extend(p, {
+    id: c.id,
+    unitPrice: c.unitPrice,
+    qt: p.qt + c.qt,
+    price: p.price + c.price
+  });
+}

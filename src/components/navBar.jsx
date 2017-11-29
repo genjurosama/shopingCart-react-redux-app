@@ -5,11 +5,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 import 'font-awesome/css/font-awesome.min.css';
 import Cart from '../containers/cart.jsx'
+import CartPage from '../containers/cartPage.jsx'
 
 const NavBar = () => {
   return (
     <div>
-     <Navbar inverse collapseOnSelect>
+     <Navbar>
      <Navbar.Header>
        <Navbar.Brand>
          <a href="#">Shoping Cart</a>
@@ -18,7 +19,9 @@ const NavBar = () => {
      </Navbar.Header>
      <Navbar.Collapse>
        <Nav pullRight>
-         <NavItem eventKey={1} href="#"><Cart/></NavItem>
+         <NavItem eventKey={1} href="/cart"></NavItem>
+         <Cart/>
+         <CartPage/>
        </Nav>
      </Navbar.Collapse>
    </Navbar>

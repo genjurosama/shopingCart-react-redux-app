@@ -6,15 +6,10 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  products: [],
-  cart:{
-    cart:{
-      products:[]
-    }
-  }
+  products: []
 };
 
-export const products = (state = initialState,action) => {
+export const productsReducer = (state = initialState,action) => {
   switch (action.type) {
     case PRODUCT_FETCH_REQUESTED:
       console.log('reducer request')

@@ -20,6 +20,7 @@ import mySaga from './actions/productsSaga'
 
 
 
+
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
@@ -30,6 +31,7 @@ const store = createStore(
 )
 
 sagaMiddleware.run(mySaga)
+
 
 const wrapApp = (AppComponent, reduxStore) => (
   <Provider store={reduxStore}>

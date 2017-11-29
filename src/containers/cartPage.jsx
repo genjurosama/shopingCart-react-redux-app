@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { CART_ADD_PRODUCT, addProductToCart,removeProductFromCart } from "../actions/cart";
+import { CART_ADD_PRODUCT, addProductToCart,removeProductFromCart,subtractAmountProductFromCart } from "../actions/cart";
 import { Product } from "../components/product.jsx";
-import { Table, Button } from "react-bootstrap";
-import { Products } from "../containers/products.jsx";
+import { Table, Button,Modal } from "react-bootstrap";
+import { ProductsList } from "../components/productsList.jsx";
+import {hideModal} from '../actions/ui'
 
 class CartPage extends Component{
     componentDidMount(){
@@ -12,9 +13,24 @@ class CartPage extends Component{
     }
     render(){
         return (
-            <div>
-                <Products products={this.props.products}/>
-            </div>
+            <div className="static-modal">
+            <Modal  show={this.props.showModal} onHide={this.close}>
+              <Modal.Header>
+                <Modal.Title>Modal title</Modal.Title>
+              </Modal.Header>
+        
+              <Modal.Body>
+              <ProductsList products={this.props.products} cartView={true}  addProductToCart={this.props.addProductToCart} subtractProductFromCart={this.props.subtractAmountProductFromCart} removeProductFromCart={this.props.removeProductFromCart}/>
+            
+              </Modal.Body>
+        
+              <Modal.Footer>
+                <Button onClick={()=>this.props.hideModal()}>Close</Button>
+              </Modal.Footer>
+        
+            </Modal>
+          </div>
+                
         );
     }
 }
@@ -24,12 +40,13 @@ class CartPage extends Component{
 //      > whenever state changes, the UserList will automatically re-render
 function mapStateToProps(state) {
     console.log('received :',state);
-    return { products: state.cart.cart.products || [] };
+    return { products: state.cartReducer.cart.products || [],
+            showModal:state.uiReducer.showModal };
   }
   
   //      > now UserList has this.props.selectUser
   function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addProductToCart,removeProductFromCart }, dispatch);
+    return bindActionCreators({addProductToCart,removeProductFromCart,subtractAmountProductFromCart,hideModal }, dispatch);
   }
   
   // We don't want to return the plain UserList anymore, we want to return the smart Container
