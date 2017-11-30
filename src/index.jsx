@@ -27,7 +27,7 @@ const sagaMiddleware = createSagaMiddleware()
 const logger = createLogger()
 const store = createStore(
   reducer,
-  applyMiddleware(thunk, promise, logger,sagaMiddleware),
+  applyMiddleware(logger,sagaMiddleware),
 )
 
 sagaMiddleware.run(mySaga)

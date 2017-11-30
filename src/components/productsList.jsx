@@ -19,23 +19,23 @@ export const ProductsList = function({
           </tr>
         ) : (
           <tr>
-            <th>title</th> <th>price</th>
+            <th>title</th><th>price</th>
           </tr>
         )}
       </thead>
       <tbody>
-      {products.map((prod,i) => {
-        return (
-             <Product
-                  key={!cartView?prod.id:i}
-                  product = {prod}
-                  cartView={cartView}
-                  addProductToCart = {addProductToCart}
-                  subtractProductFromCart= {subtractProductFromCart}
-                  removeProductFromCart = {removeProductFromCart}
-                />
-        );
-      })}
+        {products.map((prod, i) => {
+          return (
+            <Product
+              key={!cartView ? prod.id : i}
+              product={prod}
+              cartView={cartView}
+              addProductToCart={addProductToCart}
+              subtractProductFromCart={subtractProductFromCart}
+              removeProductFromCart={removeProductFromCart}
+            />
+          );
+        })}
       </tbody>
     </Table>
   );

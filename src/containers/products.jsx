@@ -14,13 +14,15 @@ class Products extends Component {
   }
 
   handleClick(e, data) {
-    console.log(this)
     this.props.addProductToCart(data);
   }
   render() {
     return (
       <div>
-         <ProductsList products={this.props.products} addProductToCart={this.props.addProductToCart} />
+        <ProductsList
+          products={this.props.products}
+          addProductToCart={this.props.addProductToCart}
+        />
       </div>
     );
   }
@@ -29,7 +31,7 @@ class Products extends Component {
 // Get apps state and pass it as props to UserList
 //      > whenever state changes, the UserList will automatically re-render
 function mapStateToProps(state) {
-  return { products: state.productsReducer.products  || []};
+  return { products: state.productsReducer.products || [] };
 }
 
 //      > now UserList has this.props.selectUser

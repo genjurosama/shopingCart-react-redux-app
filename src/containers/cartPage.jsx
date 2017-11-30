@@ -13,16 +13,18 @@ import { ProductsList } from "../components/productsList.jsx";
 import { hideModal } from "../actions/ui";
 import { clearCart } from "../actions/cart";
 import * as _ from "lodash";
-import '../App.css'
+import "../App.css";
 
 class CartPage extends Component {
   getTotal() {
     let total = 0;
     const products = this.props.products;
     if (products.length >= 1) {
-      total = _.sumBy(products, function(o) { return o.price; });
+      total = _.sumBy(products, function(o) {
+        return o.price;
+      });
     }
-    console.log('total:',total);
+
     return total;
   }
   render() {
@@ -43,12 +45,15 @@ class CartPage extends Component {
                 }
                 removeProductFromCart={this.props.removeProductFromCart}
               />
-               <div className="total" ><b>Total: </b>{this.getTotal().toFixed(2)}</div>
+              <div className="total">
+                <b>Total: </b>
+                {this.getTotal().toFixed(2)}
+              </div>
             </Modal.Body>
           ) : (
             <Modal.Body>Cart is empty.</Modal.Body>
           )}
-         
+
           <Modal.Footer>
             <Button onClick={() => this.props.hideModal()}>Close</Button>
             <Button onClick={() => this.props.clearCart()}>Clear</Button>
@@ -62,7 +67,6 @@ class CartPage extends Component {
 // Get apps state and pass it as props to UserList
 //      > whenever state changes, the UserList will automatically re-render
 function mapStateToProps(state) {
-  console.log("received :", state);
   return {
     products: state.cartReducer.cart.products || [],
     showModal: state.uiReducer.showModal

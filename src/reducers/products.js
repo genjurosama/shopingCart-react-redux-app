@@ -9,13 +9,11 @@ const initialState = {
   products: []
 };
 
-export const productsReducer = (state = initialState,action) => {
+export const productsReducer = (state = initialState, action) => {
   switch (action.type) {
     case PRODUCT_FETCH_REQUESTED:
-      console.log('reducer request')
       return Object.assign({}, state, action.payload);
     case PRODUCT_FETCH_SUCCEEDED:
-      console.log('reducer',action);  
       return {
         ...state,
         products: state.products.concat(action.products)
