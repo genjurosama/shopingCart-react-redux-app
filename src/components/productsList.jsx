@@ -23,63 +23,20 @@ export const ProductsList = function({
           </tr>
         )}
       </thead>
-      {products.map(prod => {
+      <tbody>
+      {products.map((prod,i) => {
         return (
-          <tbody>
-            {cartView ? (
-              <tr>
-                <Product
-                  key={"cart" + prod.id}
-                  title={prod.title}
-                  price={prod.price}
-                  qt={prod.qt}
-                  unitPrice={prod.unitPrice}
+             <Product
+                  key={!cartView?prod.id:i}
+                  product = {prod}
                   cartView={cartView}
+                  addProductToCart = {addProductToCart}
+                  subtractProductFromCart= {subtractProductFromCart}
+                  removeProductFromCart = {removeProductFromCart}
                 />
-                <td>
-                  <Button
-                    onClick={e => addProductToCart(prod)}
-                    bsStyle="primary"
-                  >
-                    <i className="fa fa-plus" />
-                  </Button>
-                  <Button
-                    onClick={e => subtractProductFromCart(prod.id)}
-                    bsStyle="primary"
-                  >
-                    <i className="fa fa-minus" />
-                  </Button>
-                  <Button
-                    onClick={e => removeProductFromCart(prod.id)}
-                    bsStyle="primary"
-                  >
-                    <i className="fa fa-close" />
-                  </Button>
-                </td>
-              </tr>
-            ) : (
-              <tr>
-                <Product
-                  key={prod.id}
-                  title={prod.title}
-                  price={prod.price}
-                  qt={prod.qt}
-                  unitPrice={prod.unitPrice}
-                  cartView={cartView}
-                />
-                <td>
-                  <Button
-                    onClick={e => addProductToCart(prod)}
-                    bsStyle="primary"
-                  >
-                    <i className="fa fa-plus" />
-                  </Button>
-                </td>
-              </tr>
-            )}
-          </tbody>
         );
       })}
+      </tbody>
     </Table>
   );
 };
