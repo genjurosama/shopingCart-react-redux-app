@@ -1,4 +1,6 @@
-//@flow
+/**
+ *This file will hold the cart reducer to manage addition subtraction and removal of products
+ */
 import * as _ from "lodash";
 
 import {
@@ -8,12 +10,20 @@ import {
   CART_CLEAR
 } from "../actions/cart";
 
+
 const initialState = {
   cart: {
     products: []
   }
 };
 
+
+/**
+ * Reducer for cart operations
+ * @param {Object} state 
+ * @param {Object} action 
+ * @returns {Object} as a new immutated state
+ */
 export const cartReducer = (state = initialState, action) => {
   let cart = state.cart || {};
   let products = [];
@@ -25,6 +35,8 @@ export const cartReducer = (state = initialState, action) => {
         qt: 1,
         price: action.product.unitPrice
       });
+
+      //group by items types and calculate subtotals
       const result = _.chain(cart.products)
         .groupBy("id")
         .map(function(category) {
@@ -42,6 +54,7 @@ export const cartReducer = (state = initialState, action) => {
         cart: cart
       };
     case CART_REMOVE_PRODUCT:
+      //product is removed all together from cart
       products = state.cart.products.filter(
         product => product.id !== action.productId
       );
@@ -51,6 +64,7 @@ export const cartReducer = (state = initialState, action) => {
         cart: cart
       };
     case CART_SUB_PRODUCT:
+      //only subtract amount and unit price from the target product
       products = state.cart.products.map(product => {
         if (product.id === action.productId && product.qt > 1) {
           product.qt -= 1;
@@ -75,6 +89,13 @@ export const cartReducer = (state = initialState, action) => {
   }
 };
 
+
+/**
+ * 
+ * @param {Object} p accumulator product holding total price and amount
+ * @param {Object} c current element
+ * @returns {Number} will return a new new object with accumulated values
+ */
 function sumTotals(p, c) {
   return _.extend(p, {
     id: c.id,
