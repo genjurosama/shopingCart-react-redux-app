@@ -24,17 +24,14 @@ class Cart extends Component {
   }
 }
 
-// Get apps state and pass it as props to UserList
-//      > whenever state changes, the UserList will automatically re-render
+
 function mapStateToProps(state) {
   return { products: state.cartReducer.cart.products || [] };
 }
 
-//      > now UserList has this.props.selectUser
+
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({ showModal }, dispatch);
 }
 
-// We don't want to return the plain UserList anymore, we want to return the smart Container
-//
 export default connect(mapStateToProps, matchDispatchToProps)(Cart);
