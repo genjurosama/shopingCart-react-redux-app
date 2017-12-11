@@ -64,8 +64,7 @@ class CartPage extends Component {
   }
 }
 
-// Get apps state and pass it as props to UserList
-//      > whenever state changes, the UserList will automatically re-render
+
 function mapStateToProps(state) {
   return {
     products: state.cartReducer.cart.products || [],
@@ -73,7 +72,7 @@ function mapStateToProps(state) {
   };
 }
 
-//      > now UserList has this.props.selectUser
+
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
